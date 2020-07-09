@@ -9,6 +9,8 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
+    $str = lcfirst(ucwords(str_replace('_',' ', $input)));
+    return str_replace(' ', '', $str);
 }
 
 /**
@@ -21,6 +23,15 @@ function snakeCaseToCamelCase(string $input)
  */
 function mirrorMultibyteString(string $input)
 {
+    $reversedString = "";
+
+    for($i = mb_strlen($input, "UTF-8"); $i >= 0; $i--) {
+        $reversedString .= mb_substr($input, $i, 1, "UTF-8");
+    }
+
+    $orderedReversedString = array_reverse(explode(" ", $reversedString));
+    return implode(" ", $orderedReversedString);
+
 }
 
 /**
@@ -39,4 +50,11 @@ function mirrorMultibyteString(string $input)
  */
 function getBrandName(string $noun)
 {
+    if ($noun[0] === $noun[-1]) {
+        $bandName = ucfirst($noun) . substr($noun, 1);
+        return $bandName;
+    } else {
+        $bandName = "The " . ucfirst($noun);
+        return $bandName;
+    }
 }
