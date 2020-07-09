@@ -14,13 +14,13 @@ function getMinuteQuarter(int $minute)
 {
     if ($minute < 0 || $minute > 60) {
         throw new InvalidArgumentException("Expected integer from 0 to 60.");
-    } else if ($minute > 45 || $minute === 0) {
+    } elseif ($minute > 45 || $minute === 0) {
         return "fourth";
-    } else if ($minute > 30) {
+    } elseif ($minute > 30) {
         return "third";
-    } else if ($minute > 15) {
+    } elseif ($minute > 15) {
         return "second";
-    } else if ($minute > 0) {
+    } elseif ($minute > 0) {
         return "first";
     }
 }
@@ -38,12 +38,10 @@ function getMinuteQuarter(int $minute)
  */
 function isLeapYear(int $year)
 {
-    {
-        if ($year >= 1900) {
-            return ($year % 4) == 0;
-        } else {
-            throw new InvalidArgumentException("Year is lower than 1900.");
-        }
+    if ($year >= 1900) {
+        return ($year % 4) == 0;
+    } else {
+        throw new InvalidArgumentException("Year is lower than 1900.");
     }
 }
 
@@ -62,6 +60,7 @@ function isSumEqual(string $input)
 {
     if (strlen($input) === 6) {
         $arrNums = str_split($input);
+
         return ($arrNums[0] + $arrNums[1] + $arrNums[2]) === ($arrNums[3] + $arrNums[4] + $arrNums[5]);
     } else {
         throw new InvalidArgumentException("Wrong length. Only 6 digits allowed.");
