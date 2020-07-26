@@ -12,11 +12,11 @@ function repeatArrayValues(array $input)
 {
     $newArr = array();
 
-    foreach ($input as $value):
+    foreach ($input as $value) {
         for ($i = 0; $i < $value; $i++) {
             array_push($newArr, $value);
         }
-    endforeach;
+    }
 
     return $newArr;
 }
@@ -33,14 +33,14 @@ function getUniqueValue(array $input)
 {
     $minUnique = 0;
 
-    if (! empty($input)) {
+    if (!empty($input)) {
         $onlyUniques = [];
 
-        foreach ($input as $item):
+        foreach ($input as $item) {
             if (isUnique($input, $item)) array_push($onlyUniques, $item);
-        endforeach;
+        }
 
-        if (! empty($onlyUniques)) $minUnique = min($onlyUniques);
+        if (!empty($onlyUniques)) $minUnique = min($onlyUniques);
     }
 
     return $minUnique;
@@ -50,9 +50,9 @@ function isUnique(array $arr,int $i)
 {
     $matches = 0;
 
-    foreach ($arr as $item):
-        if($item === $i) $matches++;
-    endforeach;
+    foreach ($arr as $item) {
+        if ($item === $i) $matches++;
+    }
 
     return $matches === 1;
 }
@@ -85,15 +85,15 @@ function groupByTag(array $input)
 {
     $resultArr = array();
 
-    foreach($input as $value):
-        foreach ($value['tags'] as $description):
+    foreach($input as $value) {
+        foreach ($value['tags'] as $description) {
             $resultArr[$description][] = $value['name'];
-        endforeach;
-    endforeach;
+        }
+    }
 
-    foreach ($resultArr as &$item):
+    foreach ($resultArr as &$item) {
         array_multisort($item, SORT_ASC);
-    endforeach;
+    }
 
     return $resultArr;
 }
