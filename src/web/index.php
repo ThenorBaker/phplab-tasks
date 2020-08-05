@@ -10,6 +10,16 @@ $airports = require './airports.php';
  * (see Filtering tasks 1 and 2 below)
  */
 
+if (isset($_GET['filter_by_first_letter'])) {
+    $letter = $_GET['filter_by_first_letter'];
+    $airports = firstLetterFiltering($airports, $letter);
+}
+
+if (isset($_GET['filter_by_state'])) {
+    $state = $_GET['filter_by_state'];
+    $airports = stateFiltering($airports, $state);
+}
+
 // Sorting
 /**
  * Here you need to check $_GET request if it has sorting key
@@ -17,12 +27,24 @@ $airports = require './airports.php';
  * (see Sorting task below)
  */
 
+if(isset($_GET['sort'])){
+    $sortKey = $_GET['sort'];
+    $airports = sortByKey($airports, $sortKey);
+}
+
 // Pagination
 /**
  * Here you need to check $_GET request if it has pagination key
  * and apply pagination logic
  * (see Pagination task below)
  */
+
+define('PER_PAGE', 10); // I prefer 10 per page instead of 5 because of 80 page buttons without any filtering
+
+$pages = getPagesCount($airports);
+$currentPage = (int) $_GET['page'] ?? 1;
+$airports = getPagination($airports, $currentPage);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +65,6 @@ $airports = require './airports.php';
         Filtering task #1
         Replace # in HREF attribute so that link follows to the same page with the filter_by_first_letter key
         i.e. /?filter_by_first_letter=A or /?filter_by_first_letter=B
-
         Make sure, that the logic below also works:
          - when you apply filter_by_first_letter the page should be equal 1
          - when you apply filter_by_first_letter, than filter_by_state (see Filtering task #2) is not reset
@@ -51,12 +72,11 @@ $airports = require './airports.php';
     -->
     <div class="alert alert-dark">
         Filter by first letter:
-
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="#"><?= $letter ?></a>
+            <a href="<?= "/?" . http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_first_letter' => $letter])) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
-        <a href="/" class="float-right">Reset all filters</a>
+        <a href="/?page=1" class="float-right">Reset all filters</a>
     </div>
 
     <!--
@@ -70,37 +90,38 @@ $airports = require './airports.php';
            /?page=2&filter_by_first_letter=A&sort=name
     -->
     <table class="table">
-        <thead>
-        <tr>
-            <th scope="col"><a href="#">Name</a></th>
-            <th scope="col"><a href="#">Code</a></th>
-            <th scope="col"><a href="#">State</a></th>
-            <th scope="col"><a href="#">City</a></th>
-            <th scope="col">Address</th>
-            <th scope="col">Timezone</th>
-        </tr>
-        </thead>
-        <tbody>
+       <thead>
+       <tr>
+           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
+           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">Code</a></th>
+           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
+           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'city'])) ?>">City</a></th>
+           <th scope="col">Address</th>
+           <th scope="col">Timezone</th>
+       </tr>
+       </thead>
+       <tbody>
         <!--
             Filtering task #2
             Replace # in HREF so that link follows to the same page with the filter_by_state key
-            i.e. /?filter_by_state=A or /?filter_by_state=B
+            i.e. /?filter_by_state=Texas or /?filter_by_state=Georgia
 
             Make sure, that the logic below also works:
              - when you apply filter_by_state the page should be equal 1
              - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
                i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
         -->
-        <?php foreach ($airports as $airport): ?>
-        <tr>
-            <td><?= $airport['name'] ?></td>
-            <td><?= $airport['code'] ?></td>
-            <td><a href="#"><?= $airport['state'] ?></a></td>
-            <td><?= $airport['city'] ?></td>
-            <td><?= $airport['address'] ?></td>
-            <td><?= $airport['timezone'] ?></td>
-        </tr>
-        <?php endforeach; ?>
+
+         <?php foreach ($airports as $airport): ?>
+         <tr>
+             <td><?= $airport['name'] ?></td>
+             <td><?= $airport['code'] ?></td>
+             <td><a href="<?= "/?" . http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_state' => $airport['state']])) ?>"><?= $airport['state'] ?></a></td>
+             <td><?= $airport['city'] ?></td>
+             <td><?= $airport['address'] ?></td>
+             <td><?= $airport['timezone'] ?></td>
+         </tr>
+         <?php endforeach; ?>
         </tbody>
     </table>
 
@@ -115,11 +136,14 @@ $airports = require './airports.php';
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <?php for ($i = 1; $i <= $pages; $i++): ?>
+                <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
+                    <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
         </ul>
     </nav>
 
 </main>
+</body>
 </html>
