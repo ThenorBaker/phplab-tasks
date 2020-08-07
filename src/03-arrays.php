@@ -10,15 +10,16 @@
  */
 function repeatArrayValues(array $input)
 {
-    $newArr = array();
+    $length = count($input);
+    $result = [];
 
-    foreach ($input as $value):
-        for ($i = 0; $i < $value; $i++) {
-            array_push($newArr, $value);
-        }
-    endforeach;
+    for($i = 0, $index = 0; $i < $length; $i++, $index += $item){
+        $item = $input[$i];
+        $buffer = array_fill($index, $item, $item);
+        $result = array_merge($result, $buffer);
+    }
 
-    return $newArr;
+    return $result;
 }
 
 /**
@@ -33,14 +34,18 @@ function getUniqueValue(array $input)
 {
     $minUnique = 0;
 
-    if (! empty($input)) {
+    if (!empty($input)) {
         $onlyUniques = [];
 
-        foreach ($input as $item):
-            if (isUnique($input, $item)) array_push($onlyUniques, $item);
-        endforeach;
+        foreach ($input as $item) {
+            if (isUnique($input, $item)) {
+                array_push($onlyUniques, $item);
+            }
+        }
 
-        if (! empty($onlyUniques)) $minUnique = min($onlyUniques);
+        if (!empty($onlyUniques)) {
+            $minUnique = min($onlyUniques);
+        }
     }
 
     return $minUnique;
@@ -50,9 +55,11 @@ function isUnique(array $arr,int $i)
 {
     $matches = 0;
 
-    foreach ($arr as $item):
-        if($item === $i) $matches++;
-    endforeach;
+    foreach ($arr as $item) {
+        if ($item === $i) {
+            $matches++;
+        }
+    }
 
     return $matches === 1;
 }
@@ -83,17 +90,17 @@ function isUnique(array $arr,int $i)
  */
 function groupByTag(array $input)
 {
-    $resultArr = array();
+    $resultArr = [];
 
-    foreach($input as $value):
-        foreach ($value['tags'] as $description):
+    foreach($input as $value) {
+        foreach ($value['tags'] as $description) {
             $resultArr[$description][] = $value['name'];
-        endforeach;
-    endforeach;
+        }
+    }
 
-    foreach ($resultArr as &$item):
+    foreach ($resultArr as &$item) {
         array_multisort($item, SORT_ASC);
-    endforeach;
+    }
 
     return $resultArr;
 }
