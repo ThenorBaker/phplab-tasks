@@ -41,8 +41,8 @@ if(isset($_GET['sort'])){
 
 define('PER_PAGE', 10); // I prefer 10 per page instead of 5 because of 80 page buttons without any filtering
 
+$currentPage = $_GET['page'] ?? 1;
 $pages = getPagesCount($airports);
-$currentPage = (int) $_GET['page'] ?? 1;
 $airports = getPagination($airports, $currentPage);
 
 ?>
@@ -73,7 +73,7 @@ $airports = getPagination($airports, $currentPage);
     <div class="alert alert-dark">
         Filter by first letter:
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="<?= "/?" . http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_first_letter' => $letter])) ?>"><?= $letter ?></a>
+            <a href="<?= getURL($_GET, 'filter_by_first_letter', $letter, true) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/?page=1" class="float-right">Reset all filters</a>
@@ -92,12 +92,13 @@ $airports = getPagination($airports, $currentPage);
     <table class="table">
        <thead>
        <tr>
-           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
-           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">Code</a></th>
-           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
-           <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'city'])) ?>">City</a></th>
+           <th scope="col"><a href="<?= getURL($_GET, 'sort', 'name') ?>">Name</a></th>
+           <th scope="col"><a href="<?= getURL($_GET, 'sort', 'code') ?>">Code</a></th>
+           <th scope="col"><a href="<?= getURL($_GET, 'sort', 'state') ?>">State</a></th>
+           <th scope="col"><a href="<?= getURL($_GET, 'sort', 'city') ?>">City</a></th>
            <th scope="col">Address</th>
            <th scope="col">Timezone</th>
+
        </tr>
        </thead>
        <tbody>
@@ -116,7 +117,7 @@ $airports = getPagination($airports, $currentPage);
          <tr>
              <td><?= $airport['name'] ?></td>
              <td><?= $airport['code'] ?></td>
-             <td><a href="<?= "/?" . http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_state' => $airport['state']])) ?>"><?= $airport['state'] ?></a></td>
+             <td><a href="<?= getURL($_GET, 'filter_by_state', $airport['state'], true) ?>"><?= $airport['state'] ?></a></td>
              <td><?= $airport['city'] ?></td>
              <td><?= $airport['address'] ?></td>
              <td><?= $airport['timezone'] ?></td>
@@ -138,7 +139,7 @@ $airports = getPagination($airports, $currentPage);
         <ul class="pagination justify-content-center">
             <?php for ($i = 1; $i <= $pages; $i++): ?>
                 <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
-                    <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                    <a class="page-link" href="<?= getURL($_GET, 'page', $i)?>"><?= $i ?></a>
                 </li>
             <?php endfor; ?>
         </ul>
