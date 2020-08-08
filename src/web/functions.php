@@ -98,3 +98,23 @@ function getPagination($airports, $currentPage)
 {
     return array_slice($airports, ($currentPage - 1) * PER_PAGE, PER_PAGE);
 }
+
+/**
+ * Returns the generated URL
+ * @param array $currentURL
+ * @param string $key
+ * @param mixed $value
+ * @param boolean $pageReset
+ * @return string
+ */
+
+function getURL($currentURL, $key, $value, $pageReset = false)
+{
+    if($pageReset) {
+        $currentURL['page'] = 1;
+    }
+
+    $additionalURL = [$key => $value];
+
+    return "/?" . http_build_query(array_merge($currentURL, $additionalURL));
+}
