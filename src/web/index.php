@@ -41,7 +41,12 @@ if(isset($_GET['sort'])){
 
 define('PER_PAGE', 10); // I prefer 10 per page instead of 5 because of 80 page buttons without any filtering
 
-$currentPage = $_GET['page'] ?? 1;
+$currentPage = 1;
+
+if(isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $currentPage = $_GET['page'];
+}
+
 $pages = getPagesCount($airports);
 $airports = getPagination($airports, $currentPage);
 
