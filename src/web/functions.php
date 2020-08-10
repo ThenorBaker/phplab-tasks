@@ -94,25 +94,27 @@ function sortByKey(array $airports, string $sortKey)
 
 /**
  * Returns total pages count
- * @param  array  $airports
+ * @param array $airports
+ * @param int $perPage
  * @return int
  */
 
-function getPagesCount(array $airports)
+function getPagesCount(array $airports, int $perPage)
 {
-        return (int) ceil(count($airports) / PER_PAGE);
+        return (int) ceil(count($airports) / $perPage);
 }
 
 /**
  * Returns a peace of array that will be displayed at the page
- * @param  array  $airports
- * @param  int  $currentPage
+ * @param array $airports
+ * @param int $currentPage
+ * @param $perPage
  * @return mixed[]
  */
 
-function getPagination(array $airports, int $currentPage)
+function getPagination(array $airports, int $currentPage, $perPage)
 {
-    return array_slice($airports, ($currentPage - 1) * PER_PAGE, PER_PAGE);
+    return array_slice($airports, ($currentPage - 1) * $perPage, $perPage);
 }
 
 /**
