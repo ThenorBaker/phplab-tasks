@@ -36,7 +36,7 @@ class FirstLetterFilteringTest extends TestCase
                 2 => ['name' => 'Brad'],
                 4 => ['name' => 'Bran'],
                 5 => ['name' => 'Brace']
-            ],
+                ],
                 'first_arg_names' => [
                     0 => ['name' => 'Phil'],
                     1 => ['name' => 'Joe'],
