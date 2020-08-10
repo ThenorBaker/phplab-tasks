@@ -57,11 +57,16 @@ function firstLetterFiltering(array $airports, string $letter)
 
 function stateFiltering($airports, $state)
 {
-    foreach ($airports as $key => $airport) {
-        if($airport['state'] !== $state){
-        unset($airports[$key]);
+        foreach ($airports as $key => $airport) {
+            if (isset($airport['state']) && is_string($airport['state'])) {
+                $bufferState = strtolower($airport['state']);
+                if ($bufferState !== strtolower($state)) {
+                    unset($airports[$key]);
+                }
+            } else {
+                throw new InvalidArgumentException('Airport state is not a string');
+            }
         }
-    }
 
     return $airports;
 }
@@ -75,9 +80,14 @@ function stateFiltering($airports, $state)
 
 function sortByKey($airports, $sortKey)
 {
+    trim(strtolower($sortKey));
+    if($sortKey === 'name' || $sortKey === 'code' || $sortKey === 'city' || $sortKey === 'state') {
         usort($airports, function ($a, $b) use ($sortKey) {
             return ($a[$sortKey] <=> $b[$sortKey]);
         });
+    } else {
+        throw new InvalidArgumentException("Wrong sort key. Only 'city', 'state', 'code' or 'name' allowed.");
+    }
 
     return $airports;
 }
