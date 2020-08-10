@@ -55,7 +55,7 @@ function firstLetterFiltering(array $airports, string $letter)
  * @return mixed[]
  */
 
-function stateFiltering($airports, $state)
+function stateFiltering(array $airports, string $state)
 {
         foreach ($airports as $key => $airport) {
             if (isset($airport['state']) && is_string($airport['state'])) {
@@ -78,7 +78,7 @@ function stateFiltering($airports, $state)
  * @return mixed[]
  */
 
-function sortByKey($airports, $sortKey)
+function sortByKey(array $airports, string $sortKey)
 {
     trim(strtolower($sortKey));
     if($sortKey === 'name' || $sortKey === 'code' || $sortKey === 'city' || $sortKey === 'state') {
@@ -98,8 +98,9 @@ function sortByKey($airports, $sortKey)
  * @return int
  */
 
-function getPagesCount($airports){
-    return (int) ceil(count($airports) / PER_PAGE);
+function getPagesCount(array $airports)
+{
+        return (int) ceil(count($airports) / PER_PAGE);
 }
 
 /**
@@ -109,7 +110,7 @@ function getPagesCount($airports){
  * @return mixed[]
  */
 
-function getPagination($airports, $currentPage)
+function getPagination(array $airports, int $currentPage)
 {
     return array_slice($airports, ($currentPage - 1) * PER_PAGE, PER_PAGE);
 }
@@ -123,7 +124,7 @@ function getPagination($airports, $currentPage)
  * @return string
  */
 
-function getURL($currentURL, $key, $value, $pageReset = false)
+function getURL(array $currentURL, string $key, string $value, bool $pageReset = false)
 {
     if($pageReset) {
         $currentURL['page'] = 1;
