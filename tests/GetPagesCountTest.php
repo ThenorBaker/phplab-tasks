@@ -4,19 +4,15 @@ use PHPUnit\Framework\TestCase;
 
 class GetPagesCountTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        define('PER_PAGE', 5);
-    }
-
     /**
      * @dataProvider providerPositiveData
      * @param $expected
      * @param $airports
+     * @param $perPage
      */
-    public function testPositive($expected, $airports)
+    public function testPositive($expected, $airports, $perPage)
     {
-        $this->assertSame($expected, getPagesCount($airports));
+        $this->assertSame($expected, getPagesCount($airports, $perPage));
     }
 
     public function testWrongArgType()
@@ -37,7 +33,8 @@ class GetPagesCountTest extends TestCase
                     3 => ['name' => 'Jolly', 'state' => 'Alaska'],
                     4 => ['name' => 'Bran', 'state' => 'California'],
                     5 => ['name' => 'Brace', 'state' => 'Georgia']
-                ]
+                ],
+                'perPage' => 5
             ],
         ];
     }
