@@ -32,11 +32,16 @@ function getUniqueFirstLetters(array $airports)
  * @return mixed[]
  */
 
-function firstLetterFiltering($airports, $letter)
+function firstLetterFiltering(array $airports, string $letter)
 {
     foreach ($airports as $key => $airport) {
-        if(strtolower($airport['name'][0]) !== strtolower($letter)){
-            unset($airports[$key]);
+        if(isset($airport['name']) && is_string($airport['name'])){
+            $firstLetter = $airport['name'][0];
+            if(strtolower($firstLetter) !== strtolower($letter)){
+                unset($airports[$key]);
+            }
+        } else {
+            throw new InvalidArgumentException('Airport name is not a string');
         }
     }
 
