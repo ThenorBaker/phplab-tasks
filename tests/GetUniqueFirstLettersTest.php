@@ -6,10 +6,19 @@ class GetUniqueFirstLettersTest extends TestCase
 {
     /**
      * @dataProvider providerPositiveData
+     * @param $input
+     * @param $expected
      */
     public function testPositive($input, $expected)
     {
         $this->assertEquals($expected, getUniqueFirstLetters($input));
+    }
+
+    public function testWrongArgsType()
+    {
+        $this->expectException(TypeError::class);
+
+        getUniqueFirstLetters(23);
     }
 
     public function providerPositiveData()

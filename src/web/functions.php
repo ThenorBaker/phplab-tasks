@@ -32,11 +32,16 @@ function getUniqueFirstLetters(array $airports)
  * @return mixed[]
  */
 
-function firstLetterFiltering($airports, $letter)
+function firstLetterFiltering(array $airports, string $letter)
 {
     foreach ($airports as $key => $airport) {
-        if(strtolower($airport['name'][0]) !== strtolower($letter)){
-            unset($airports[$key]);
+        if(isset($airport['name']) && is_string($airport['name'])){
+            $firstLetter = $airport['name'][0];
+            if(strtolower($firstLetter) !== strtolower($letter)){
+                unset($airports[$key]);
+            }
+        } else {
+            throw new InvalidArgumentException('Airport name is not a string');
         }
     }
 
@@ -50,13 +55,18 @@ function firstLetterFiltering($airports, $letter)
  * @return mixed[]
  */
 
-function stateFiltering($airports, $state)
+function stateFiltering(array $airports, string $state)
 {
-    foreach ($airports as $key => $airport) {
-        if($airport['state'] !== $state){
-        unset($airports[$key]);
+        foreach ($airports as $key => $airport) {
+            if (isset($airport['state']) && is_string($airport['state'])) {
+                $bufferState = strtolower($airport['state']);
+                if ($bufferState !== strtolower($state)) {
+                    unset($airports[$key]);
+                }
+            } else {
+                throw new InvalidArgumentException('Airport state is not a string');
+            }
         }
-    }
 
     return $airports;
 }
@@ -68,35 +78,43 @@ function stateFiltering($airports, $state)
  * @return mixed[]
  */
 
-function sortByKey($airports, $sortKey)
+function sortByKey(array $airports, string $sortKey)
 {
+    trim(strtolower($sortKey));
+    if($sortKey === 'name' || $sortKey === 'code' || $sortKey === 'city' || $sortKey === 'state') {
         usort($airports, function ($a, $b) use ($sortKey) {
             return ($a[$sortKey] <=> $b[$sortKey]);
         });
+    } else {
+        throw new InvalidArgumentException("Wrong sort key. Only 'city', 'state', 'code' or 'name' allowed.");
+    }
 
     return $airports;
 }
 
 /**
  * Returns total pages count
- * @param  array  $airports
+ * @param array $airports
+ * @param int $perPage
  * @return int
  */
 
-function getPagesCount($airports){
-    return (int) ceil(count($airports) / PER_PAGE);
+function getPagesCount(array $airports, int $perPage)
+{
+        return (int) ceil(count($airports) / $perPage);
 }
 
 /**
  * Returns a peace of array that will be displayed at the page
- * @param  array  $airports
- * @param  int  $currentPage
+ * @param array $airports
+ * @param int $currentPage
+ * @param $perPage
  * @return mixed[]
  */
 
-function getPagination($airports, $currentPage)
+function getPagination(array $airports, int $currentPage, $perPage)
 {
-    return array_slice($airports, ($currentPage - 1) * PER_PAGE, PER_PAGE);
+    return array_slice($airports, ($currentPage - 1) * $perPage, $perPage);
 }
 
 /**
@@ -108,7 +126,7 @@ function getPagination($airports, $currentPage)
  * @return string
  */
 
-function getURL($currentURL, $key, $value, $pageReset = false)
+function getURL(array $currentURL, string $key, string $value, bool $pageReset = false)
 {
     if($pageReset) {
         $currentURL['page'] = 1;
