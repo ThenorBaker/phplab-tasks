@@ -5,7 +5,11 @@
             "src/02-strings.php",
             "src/03-arrays.php",
             "src/04-functions.php",
-            "src/web/functions.php"
+            "src/web/functions.php",
+            "src/oop/functions.php",
+            "src/oop/classes/Cookie.php",
+            "src/oop/classes/Request.php",
+            "src/oop/classes/Session.php"
         ],
         "psr-4": {
             "src\\": "src/"
