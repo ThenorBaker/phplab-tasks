@@ -29,7 +29,7 @@ $cookie->placeholder = array_merge($cookie->placeholder, ['Hello' => 'World!',
 
             <div clas="ml-5 mt-1"> <!-- method's info -->
             <?php
-            	$current_method = $request->query('method');
+                $current_method = $request->query('method');
                 $current_arg = getArgCookie($current_method);
                 $method_signature = getSignature($current_method, require '../resources/cookie_methods_info.php');
                 $method_description = getDescription($current_method, require '../resources/cookie_methods_info.php');

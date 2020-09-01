@@ -11,7 +11,7 @@ class Cookie
 
     public function get($key, $default = null)
     {
-        if(!empty($this->placeholder[$key])){
+        if (!empty($this->placeholder[$key])) {
             return $this->placeholder[$key];
         } else {
             return $default;
@@ -22,7 +22,7 @@ class Cookie
     {
         $result = [];
 
-        if(!empty($only)){
+        if (!empty($only)) {
             foreach ($only as $filteringKey) {
                     if(isExists($filteringKey, $this->placeholder)){
                         array_push($result, $this->placeholder[$filteringKey]);
@@ -30,7 +30,7 @@ class Cookie
                 }
             }
 
-        if(!empty($result)){
+        if (!empty($result)) {
            return $result;
         } else {
             return $this->placeholder;
@@ -57,4 +57,3 @@ class Cookie
         }
     }
 }
-

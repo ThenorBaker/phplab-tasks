@@ -24,15 +24,15 @@ class Request
         $merged = array_merge($this->query, $this->request);
         $result = [];
 
-        if(!empty($only)){
+        if (!empty($only)) {
             foreach ($only as $filteringKey) {
-                    if(isExists($filteringKey, $merged)){
+                    if (isExists($filteringKey, $merged)) {
                         array_push($result, $merged[$filteringKey]);
                     }
                 }
             }
 
-        if(!empty($result)){
+        if (!empty($result)) {
            return $result;
         } else {
              return null;
@@ -47,7 +47,7 @@ class Request
     
     public function query($key, $default = 'null')
     {
-        if(!empty($this->query[$key])){
+        if (!empty($this->query[$key])) {
             return $this->query[$key];
         } else {
             return $default;
@@ -56,7 +56,7 @@ class Request
 
     public function post($key, $default = 'null')
     {
-        if(!empty($this->request[$key])){
+        if (!empty($this->request[$key])) {
             return $this->request[$key];
         } else {
             return $default;
@@ -67,8 +67,7 @@ class Request
     {
         if (!empty($this->server['HTTP_CLIENT_IP'])) {
             $ip = $this->server['HTTP_CLIENT_IP'];
-        } else if
-        (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
+        } elseif (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
             $ip = $this->server['HTTP_X_FORWARDED_FOR'];
         } else {
             $ip = $this->server['REMOTE_ADDR'];

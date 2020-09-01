@@ -29,5 +29,4 @@ return [
         'name' => 'userAgent()',
         'description' => 'Returns users browser User Agent.',
     ],
-
 ];

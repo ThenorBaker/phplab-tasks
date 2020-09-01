@@ -1,9 +1,5 @@
 <?php
 
-function debug($data){
-    return '<pre>' . print_r($data, 1) . '</pre>';
-}
-
 function getDescription($current_method, $method_description)
 {
     foreach ($method_description as $key => $value){
@@ -36,19 +32,12 @@ function isExists($filteringKey, $merged)
 function getArgRequest($method)
 {
     $arg = null;
-
     switch ($method) {
-        case 'get':
+        case 'get' || 'has'|| 'query':
             $arg = 'method';
             break;
         case 'all':
             $arg = ['method'];
-            break;
-        case 'has':
-            $arg = 'method';
-            break;
-        case 'query':
-            $arg = 'method';
             break;
         case 'post':
             $arg = 'some_arg';
@@ -63,7 +52,6 @@ function getArgRequest($method)
 function getArgCookie($method)
 {
     $arg = null;
-
     switch ($method) {
         case 'get':
             $arg = 'Hello';
@@ -74,10 +62,7 @@ function getArgCookie($method)
         case 'has':
             $arg = 'PHPSESSID';
             break;
-        case 'set':
-            $arg = 'cookie_setter_test';
-            break;
-        case 'remove':
+        case 'set' || 'remove':
             $arg = 'cookie_setter_test';
             break;
         default:
@@ -90,7 +75,6 @@ function getArgCookie($method)
 function getArgSession($method)
 {
     $arg = null;
-
     switch ($method) {
         case 'get':
             $arg = 'QUERY_STRING';
