@@ -20,7 +20,7 @@ class RequestTest extends TestCase
         $this->fixture = NULL;
     }
 
-    /* 'get' METHOD's TESTS START >>>>>>>>>> */
+    // >>>>> 'get' METHOD's TESTS START
     public function testGetPositive()
     {
         $this->assertEquals('World', $this->fixture->get('Hello'));
@@ -36,9 +36,9 @@ class RequestTest extends TestCase
     {
         $this->assertEquals(null, $this->fixture->get('not_exist'));
     }
-    /* <<<<<<<<< 'get' METHOD's TESTS END */
+    // <<<<< 'get' METHOD's TESTS END
 
-    /* 'all' METHOD's TESTS START >>>>> */
+    // >>>>> 'all' METHOD's TESTS START
     public function testAllPositive()
     {
         $this->assertEquals(['0' => 23.4], $this->fixture->all(['num']));
@@ -55,9 +55,9 @@ class RequestTest extends TestCase
         //returns an empty array
         $this->assertEquals([], $this->fixture->all());
     }
-    /* <<<< 'all' METHOD's TESTS END */
+    // <<<<< 'all' METHOD's TESTS END
 
-    /* 'has' METHOD's TESTS START >>>>> */
+    // >>>>> 'has' METHOD's TESTS START
     public function testHasPositive()
     {
         $this->assertEquals(true, $this->fixture->has('num'));
@@ -68,9 +68,9 @@ class RequestTest extends TestCase
         $this->expectException(TypeError::class);
         $this->fixture->has([23.4]);
     }
-    /* <<<< 'has' METHOD's TESTS END */
+    // <<<<< 'has' METHOD's TESTS END
 
-    /* 'query' METHOD's TESTS START >>>>> */
+    // >>>>> 'query' METHOD's TESTS START
     public function testQueryPositive()
     {
         $this->assertEquals(23.4, $this->fixture->query('num'));
@@ -87,9 +87,9 @@ class RequestTest extends TestCase
         //returns an empty array
         $this->assertEquals(null, $this->fixture->query('some_key'));
     }
-    /* <<<< 'query' METHOD's TESTS END */
+    // <<<<< 'query' METHOD's TESTS END
 
-    /* 'post' METHOD's TESTS START >>>>> */
+    // >>>>> 'post' METHOD's TESTS START
     public function testPostPositive()
     {
         $this->assertEquals('Space', $this->fixture->post('Test'));
@@ -106,31 +106,19 @@ class RequestTest extends TestCase
         //returns an empty array
         $this->assertEquals(null, $this->fixture->post('some_key'));
     }
-    /* <<<< 'post' METHOD's TESTS END */
+    // <<<<< 'post' METHOD's TESTS END
 
-    /* 'ip' METHOD's TESTS START >>>>> */
+    // >>>>> 'ip' METHOD's TESTS START
     public function testIpPositive()
     {
         $this->assertEquals('216.58.216.164', $this->fixture->ip());
     }
-    /* <<<< 'ip' METHOD's TESTS END */
+    // <<<<< 'ip' METHOD's TESTS END
 
     /* 'userAgent' METHOD's TESTS START >>>>> */
     public function testUserAgentPositive()
     {
         $this->assertEquals('browser', $this->fixture->userAgent());
     }
-    /* <<<< 'userAgent' METHOD's TESTS END */
-
-    public function providerPositiveData()
-    {
-        return [
-            [   'expected_string' => "/?page=1&sort=state&filter_by_first_letter=Y",
-                'first_arg_currentURL' => ['page' => '4', 'sort' => 'state'],
-                'second_arg_key' => 'filter_by_first_letter',
-                'third_arg_value' => 'Y',
-                'fourth_arg_pageReset' => true
-            ],
-        ];
-    }
+    // <<<<< 'userAgent' METHOD's TESTS END
 }
