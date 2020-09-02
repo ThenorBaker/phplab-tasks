@@ -33,7 +33,9 @@ function getArgRequest($method)
 {
     $arg = null;
     switch ($method) {
-        case 'get' || 'has'|| 'query':
+        case 'get':
+        case 'has':
+        case 'query':
             $arg = 'method';
             break;
         case 'all':
@@ -62,7 +64,8 @@ function getArgCookie($method)
         case 'has':
             $arg = 'PHPSESSID';
             break;
-        case 'set' || 'remove':
+        case 'set':
+        case 'remove':
             $arg = 'cookie_setter_test';
             break;
         default:

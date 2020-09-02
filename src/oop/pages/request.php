@@ -3,7 +3,7 @@
 require_once '../functions.php';
 require_once '../classes/Request.php';
 
-$request = new Request($_GET, $_POST, $_SERVER);
+$request = new Request();
 
 ?>
 

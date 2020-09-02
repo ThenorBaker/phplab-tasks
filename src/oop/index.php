@@ -19,7 +19,8 @@ require_once "functions.php";
             session_start();
           }
           
-        $request = new Request($_GET, $_POST, $_SERVER);
+        /*$request = new Request($_GET, $_POST, $_SERVER);*/
+        $request = new Request();
         $session = new Session($_SESSION);
         $cookie = new Cookie($_COOKIE);
 

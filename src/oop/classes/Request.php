@@ -6,17 +6,24 @@ class Request
     public $request;
     public $server;
 
-    public function __construct($get, $post, $server)
+    public function __construct()
     {
-        $this->query = $get;
-        $this->request = $post;
-        $this->server = $server;
+        $this->query = $_GET;
+        $this->request = $_POST;
+        $this->server = $_SERVER;
     }
 
-
-    public function get($key, $default = 'null')
+    public function get(string $key, $default = null)
     {
-         return ($this->query($key))?:($this->request($key));
+        $result = $default;
+
+        if ($this->post($key) != null) {
+            $result = $this->post($key);
+        } elseif ($this->query($key) != null) {
+            $result = $this->query($key);
+        }
+
+        return $result;
     }
 
     public function all(array $only = [])
@@ -32,20 +39,17 @@ class Request
                 }
             }
 
-        if (!empty($result)) {
-           return $result;
-        } else {
-             return null;
-         }
+        return $result;
     }
 
-    public function has($key)
+    public function has(string $key)
     {
         $keys = array_merge(array_keys($this->query),  array_keys($this->request));
+
         return in_array($key, $keys);
     }
-    
-    public function query($key, $default = 'null')
+
+    public function query(string $key, $default = null)
     {
         if (!empty($this->query[$key])) {
             return $this->query[$key];
@@ -54,7 +58,7 @@ class Request
         }
     }
 
-    public function post($key, $default = 'null')
+    public function post(string $key, $default = null)
     {
         if (!empty($this->request[$key])) {
             return $this->request[$key];
@@ -72,6 +76,7 @@ class Request
         } else {
             $ip = $this->server['REMOTE_ADDR'];
         }
+
         return $ip;
     }
 
