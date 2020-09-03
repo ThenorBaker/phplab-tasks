@@ -4,12 +4,12 @@ class Cookie
 {
     public $placeholder; //cookie array
 
-    public function __construct($cookie)
+    public function __construct()
     {   
-        $this->placeholder = $cookie;
+        $this->placeholder = $_COOKIE;
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         if (!empty($this->placeholder[$key])) {
             return $this->placeholder[$key];
@@ -30,23 +30,18 @@ class Cookie
                 }
             }
 
-        if (!empty($result)) {
-           return $result;
-        } else {
-            return $this->placeholder;
-        }
+            return $result;
     }
 
-    public function has($key)
+    public function has(string $key)
     {
         return in_array($key, array_keys($this->placeholder));
     }
 
-    public function set($key, $value = 'default')
+    public function set(string $key, $value = 'default')
     {
            return setcookie($key, $value);
     }
-
 
     public function remove($key)
     {

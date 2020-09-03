@@ -7,12 +7,12 @@ class Session extends Cookie
 	
     public $placeholder; //session array
 
-    public function __construct($session)
+    public function __construct()
     {
-        $this->placeholder = $session;
+        $this->placeholder = $_SESSION;
     }
 
-    public function set($key, $value = 'default')
+    public function set(string $key, $value = 'default')
     {
         $this->placeholder = array_merge($this->placeholder, [$key => $value]);
 
@@ -22,7 +22,6 @@ class Session extends Cookie
 
     public function remove($key)
     {
-        
         if (array_key_exists($key, $this->placeholder)) {
             unset($this->placeholder[$key]);
 

@@ -4,16 +4,13 @@ require_once '../functions.php';
 require_once '../classes/Request.php';
 require_once '../classes/Cookie.php';
 
-$request = new Request($_GET, $_POST, $_SERVER);
-$cookie = new Cookie($_COOKIE);
-
+$request = new Request();
+$cookie = new Cookie();
 
 $cookie->placeholder = array_merge($cookie->placeholder, ['Hello' => 'World!',
 															'Hi' => 'there!',
 															'How' => 'are you?',
 															'Are you' => 'coding?']);
-
-
 ?>
 
 <!DOCTYPE html>

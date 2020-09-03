@@ -5,13 +5,11 @@ require_once '../classes/Request.php';
 require_once '../classes/Cookie.php';
 require_once '../classes/Session.php';
 
-if (!isset($_SESSION))
-  {
-    session_start();
-  }
 
-$request = new Request($_GET, $_POST, $_SERVER);
-$session = new Session($_SERVER);
+session_start();
+
+$request = new Request();
+$session = new Session();
 
 ?>
 

@@ -80,19 +80,15 @@ function getArgSession($method)
     $arg = null;
     switch ($method) {
         case 'get':
-            $arg = 'QUERY_STRING';
+        case 'has':
+            $arg = 'some_key';
             break;
         case 'all':
-            $arg = ['DOCUMENT_ROOT'];
-            break;
-        case 'has':
-            $arg = 'HTTP_USER_AGENT';
+            $arg = ['some_key'];
             break;
         case 'set':
-            $arg = 'NEW_PLACE';
-            break;
         case 'remove':
-            $arg = 'SERVER_PROTOCOL';
+            $arg = 'NEW_PLACE';
             break;
         default:
             $arg = null;

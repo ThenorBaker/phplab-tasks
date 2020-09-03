@@ -14,15 +14,12 @@ require_once "functions.php";
 
         <?php
 
-        if (!isset($_SESSION))
-          {
-            session_start();
-          }
-          
-        /*$request = new Request($_GET, $_POST, $_SERVER);*/
+
+        session_start();
+
         $request = new Request();
-        $session = new Session($_SESSION);
-        $cookie = new Cookie($_COOKIE);
+        $cookie = new Cookie();
+        $session = new Session();
 
         ?>
 

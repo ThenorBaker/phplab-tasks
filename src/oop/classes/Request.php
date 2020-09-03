@@ -17,9 +17,9 @@ class Request
     {
         $result = $default;
 
-        if ($this->post($key) != null) {
+        if (!empty($this->post($key))) {
             $result = $this->post($key);
-        } elseif ($this->query($key) != null) {
+        } elseif (!empty($this->query($key))) {
             $result = $this->query($key);
         }
 
