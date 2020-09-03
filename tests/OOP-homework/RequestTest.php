@@ -20,6 +20,21 @@ class RequestTest extends TestCase
         $this->fixture = NULL;
     }
 
+    public function testQueryPropertyPositive()
+    {
+        $this->assertClassHasAttribute('query', Request::class);
+    }
+
+    public function testRequestPropertyPositive()
+    {
+        $this->assertClassHasAttribute('request', Request::class);
+    }
+
+    public function testServerPropertyPositive()
+    {
+        $this->assertClassHasAttribute('server', Request::class);
+    }
+
     // >>>>> 'get' METHOD's TESTS START
     public function testGetPositive()
     {
