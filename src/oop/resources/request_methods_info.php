@@ -29,4 +29,12 @@ return [
         'name' => 'userAgent()',
         'description' => 'Returns users browser User Agent.',
     ],
+    [
+        'name' => 'cookies()',
+        'description' => 'Returns Cookie object.',
+    ],
+    [
+        'name' => 'session()',
+        'description' => 'Returns Session object.',
+    ]
 ];
