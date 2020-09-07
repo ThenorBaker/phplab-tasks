@@ -8,9 +8,11 @@ class CookieTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new \src\classes\Request();
-        $this->fixture->cookie->placeholder = ['test1' => 'cookie_value',
-                                               'test2' => 'another_cookie_value'];
+        $this->fixture = new src\classes\Request();
+
+        $this->fixture->cookie->placeholder = ['test1' => '1_cookie_value',
+                                               'test2' => '2_cookie_value',
+                                               'test3' => '3_cookie_value'];
     }
 
     protected function tearDown(): void
@@ -18,14 +20,19 @@ class CookieTest extends TestCase
         $this->fixture = NULL;
     }
 
-    public function testPlaceholderPropertyPositive()
+    public function testClassPropertiesExist()
     {
         $this->assertClassHasAttribute('placeholder', \src\classes\Cookie::class);
     }
 
-    public function testGetPositive()
+    /**
+     * @dataProvider providerGetPositive
+     * @param mixed $expected
+     * @param string $input
+     */
+    public function testGetPositive($expected, $input)
     {
-        $this->assertEquals('cookie_value', $this->fixture->cookie->get('test1'));
+        $this->assertEquals($expected, $this->fixture->cookie->get($input));
     }
 
     public function testGetNegative()
@@ -39,10 +46,14 @@ class CookieTest extends TestCase
         $this->assertEquals(null, $this->fixture->cookie->get('not_exist'));
     }
 
-    public function testAllPositive()
+    /**
+     * @dataProvider providerAllPositive
+     * @param array $expected
+     * @param array $input
+     */
+    public function testAllPositive($expected, $input)
     {
-        $this->assertEquals(['test1' => 'cookie_value'],
-            $this->fixture->cookie->all(['test1']));
+        $this->assertEquals($expected, $this->fixture->cookie->all($input));
     }
 
     public function testAllNegative()
@@ -51,20 +62,109 @@ class CookieTest extends TestCase
         $this->fixture->cookie->all(23.4);
     }
 
-    public function testAllDefault()
+    /**
+     * @dataProvider providerAllDefault
+     * @param array $expected
+     */
+    public function testAllDefault($expected)
     {
-        $this->assertEquals(['test1' => 'cookie_value', 'test2' => 'another_cookie_value'],
-            $this->fixture->cookie->all());
+        $this->assertEquals($expected, $this->fixture->cookie->all());
     }
 
-    public function testHasPositive()
+    /**
+     * @dataProvider providerHasPositive
+     * @param boolean $expected
+     * @param string $input
+     */
+    public function testHasPositive($expected, $input)
     {
-        $this->assertEquals(true, $this->fixture->cookie->has('test1'));
+        $this->assertEquals($expected, $this->fixture->cookie->has($input));
     }
 
     public function testHasNegative()
     {
         $this->expectException(TypeError::class);
         $this->fixture->cookie->has([23.4]);
+    }
+
+    public function providerGetPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => '1_cookie_value',
+                '1st_argument' => 'test1'
+            ],
+            '2_data_set' => [
+                'expected_result' => '2_cookie_value',
+                '1st_argument' => 'test2'
+            ],
+            '3_data_set' => [
+                'expected_result' => '3_cookie_value',
+                '1st_argument' => 'test3'
+            ],
+        ];
+    }
+
+    public function providerAllPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => [
+                     'test1' => '1_cookie_value',
+                     'test2' => '2_cookie_value'
+                    ],
+                '1st_argument' => ['test1', 'test2']
+            ],
+            '2_data_set' => [
+                'expected_result' => [
+                     'test3' => '3_cookie_value',
+                     'test1' => '1_cookie_value'
+                    ],
+                '1st_argument' => ['test3', 'test1']
+            ],
+            '3_data_set' => [
+                'expected_result' => [
+                     'test1' => '1_cookie_value',
+                     'test3' => '3_cookie_value',
+                     'test2' => '2_cookie_value'
+                    ],
+                '1st_argument' => ['test1', 'test3', 'test2']
+            ],
+        ];
+    }
+
+    public function providerAllDefault()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => [
+                    'test1' => '1_cookie_value',
+                    'test2' => '2_cookie_value',
+                    'test3' => '3_cookie_value'
+                ],
+            ]
+        ];
+    }
+
+    public function providerHasPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'test1'
+            ],
+            '2_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'test2'
+            ],
+            '3_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'test3'
+            ],
+            '4_data_set' => [
+                'expected_result' => false,
+                '1st_argument' => 'test4'
+            ],
+        ];
     }
 }

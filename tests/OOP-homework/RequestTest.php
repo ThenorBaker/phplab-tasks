@@ -8,9 +8,10 @@ class RequestTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new \src\classes\Request();
+        $this->fixture = new src\classes\Request();
+
+        $this->fixture->request = ['Hi' => 'There', 'bool' => true];
         $this->fixture->query = ['Hello' => 'World', 'num' => 23.4];
-        $this->fixture->request = ['Test' => 'Space'];
         $this->fixture->server['HTTP_CLIENT_IP'] = '216.58.216.164';
         $this->fixture->server['HTTP_USER_AGENT'] = 'browser';
     }
@@ -20,34 +21,24 @@ class RequestTest extends TestCase
         $this->fixture = NULL;
     }
 
-    public function testQueryPropertyPositive()
+    public function testClassPropertiesExist()
     {
         $this->assertClassHasAttribute('query', \src\classes\Request::class);
-    }
-
-    public function testRequestPropertyPositive()
-    {
         $this->assertClassHasAttribute('request', \src\classes\Request::class);
-    }
-
-    public function testServerPropertyPositive()
-    {
         $this->assertClassHasAttribute('server', \src\classes\Request::class);
-    }
-
-    public function testCookieObjectPositive()
-    {
         $this->assertClassHasAttribute('cookie', \src\classes\Request::class);
-    }
-
-    public function testSessionObjectPositive()
-    {
         $this->assertClassHasAttribute('session', \src\classes\Request::class);
+
     }
 
-    public function testGetPositive()
+    /**
+     * @dataProvider providerGetPositive
+     * @param mixed $expected
+     * @param string $input
+     */
+    public function testGetPositive($expected, $input)
     {
-        $this->assertEquals('World', $this->fixture->get('Hello'));
+        $this->assertEquals($expected, $this->fixture->get($input));
     }
 
     public function testGetNegative()
@@ -61,9 +52,14 @@ class RequestTest extends TestCase
         $this->assertEquals(null, $this->fixture->get('not_exist'));
     }
 
-    public function testAllPositive()
+    /**
+     * @dataProvider providerAllPositive
+     * @param array $expected
+     * @param array $input
+     */
+    public function testAllPositive($expected, $input)
     {
-        $this->assertEquals(['num' => 23.4], $this->fixture->all(['num']));
+        $this->assertEquals($expected, $this->fixture->all($input));
     }
 
     public function testAllNegative()
@@ -72,17 +68,23 @@ class RequestTest extends TestCase
         $this->fixture->all(23.4);
     }
 
-    public function testAllDefault()
+    /**
+     * @dataProvider providerAllDefault
+     * @param $expected
+     */
+    public function testAllDefault($expected)
     {
-        $this->assertEquals(['Hello' => 'World',
-            'num' => 23.4,
-            'Test' => 'Space'],
-            $this->fixture->all());
+        $this->assertEquals($expected, $this->fixture->all());
     }
 
-    public function testHasPositive()
+    /**
+     * @dataProvider providerHasPositive
+     * @param boolean $expected
+     * @param string $input
+     */
+    public function testHasPositive($expected, $input)
     {
-        $this->assertEquals(true, $this->fixture->has('num'));
+        $this->assertEquals($expected, $this->fixture->has($input));
     }
 
     public function testHasNegative()
@@ -91,9 +93,14 @@ class RequestTest extends TestCase
         $this->fixture->has([23.4]);
     }
 
-    public function testQueryPositive()
+    /**
+     * @dataProvider providerQueryPositive
+     * @param mixed $expected
+     * @param string $input
+     */
+    public function testQueryPositive($expected, $input)
     {
-        $this->assertEquals(23.4, $this->fixture->query('num'));
+        $this->assertEquals($expected, $this->fixture->query($input));
     }
 
     public function testQueryNegative()
@@ -107,9 +114,14 @@ class RequestTest extends TestCase
         $this->assertEquals(null, $this->fixture->query('some_key'));
     }
 
-    public function testPostPositive()
+    /**
+     * @dataProvider providerPostPositive
+     * @param mixed $expected
+     * @param string $input
+     */
+    public function testPostPositive($expected, $input)
     {
-        $this->assertEquals('Space', $this->fixture->post('Test'));
+        $this->assertEquals($expected, $this->fixture->post($input));
     }
 
     public function testPostNegative()
@@ -131,5 +143,101 @@ class RequestTest extends TestCase
     public function testUserAgentPositive()
     {
         $this->assertEquals('browser', $this->fixture->userAgent());
+    }
+
+    public function providerGetPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => 'World',
+                '1st_argument' => 'Hello'
+            ],
+            '2_data_set' => [
+                'expected_result' => 23.4,
+                '1st_argument' => 'num'
+            ]
+        ];
+    }
+
+    public function providerAllPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => ['Hello' => 'World'],
+                '1st_argument' => ['Hello']
+            ],
+            '2_data_set' => [
+                'expected_result' => ['num' => 23.4],
+                '1st_argument' => ['num']
+            ],
+            '3_data_set' => [
+                'expected_result' => ['Hello' => 'World', 'num' => 23.4],
+                '1st_argument' => ['num', 'Hello']
+            ],
+            '4_data_set' => [
+                'expected_result' => ['num' => 23.4, 'Hello' => 'World'],
+                '1st_argument' => ['Hello', 'num']
+            ]
+        ];
+    }
+
+    public function providerHasPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'Hello'
+            ],
+            '2_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'num'
+            ],
+            '3_data_set' => [
+                'expected_result' => false,
+                '1st_argument' => 'not_exist'
+            ]
+        ];
+    }
+
+    public function providerQueryPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => 'World',
+                '1st_argument' => 'Hello'
+            ],
+            '2_data_set' => [
+                'expected_result' => 23.4,
+                '1st_argument' => 'num'
+            ]
+        ];
+    }
+
+    public function providerAllDefault()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => [
+                    'Hello' => 'World',
+                    'num' => 23.4,
+                    'Hi' => 'There',
+                    'bool' => true
+                ],
+            ]
+        ];
+    }
+
+    public function providerPostPositive()
+    {
+        return [
+            '1_data_set' => [
+                'expected_result' => 'There',
+                '1st_argument' => 'Hi'
+            ],
+            '2_data_set' => [
+                'expected_result' => true,
+                '1st_argument' => 'bool'
+            ]
+        ];
     }
 }
