@@ -1,6 +1,6 @@
 <?php
 
-namespace src\classes;
+use src\classes\Request;
 require "../../../vendor/autoload.php";
 
 session_start();

@@ -1,7 +1,8 @@
 <?php
 
-namespace src\classes;
 require "../../vendor/autoload.php";
+
+session_start();
 
 ?>
 <!doctype html>
@@ -11,11 +12,6 @@ require "../../vendor/autoload.php";
 
     <body class="container">
         <?php require 'pages/common/header.html' ?>
-
-        <?php
-        session_start();
-//        $request = new Request();
-        ?>
 
         <main role="main1">
 
