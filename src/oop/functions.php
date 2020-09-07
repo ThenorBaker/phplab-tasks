@@ -1,21 +1,31 @@
 <?php
 
-function getDescription($current_method, $method_description)
+function getDescription(string $current_method, array $method_description)
 {
-    foreach ($method_description as $key => $value){
-        $cutBeforeParentheses = stristr($value['name'], '(', true);
-        if($cutBeforeParentheses == $current_method){
-            return $value['description'];
+    foreach ($method_description as $subArray) {
+        if (array_key_exists('description', $subArray) && array_key_exists('name', $subArray)) {
+            $trimmedMethodsName = stristr($subArray['name'], '(', true);
+
+            if ($trimmedMethodsName == $current_method) {
+                return $subArray['description'];
+            }
+        } else {
+            continue;
         }
     }
 }
 
 function getSignature($current_method, $method_description)
 {
-    foreach ($method_description as $key => $value){
-        $cutBeforeParentheses = stristr($value['name'], '(', true);
-        if($cutBeforeParentheses == $current_method){
-            return $value['name'];
+    foreach ($method_description as $subArray) {
+        if (array_key_exists('description', $subArray) && array_key_exists('name', $subArray)) {
+            $trimmedMethodsName = stristr($subArray['name'], '(', true);
+
+            if ($trimmedMethodsName == $current_method) {
+                return $subArray['name'];
+            }
+        } else {
+            continue;
         }
     }
 }
