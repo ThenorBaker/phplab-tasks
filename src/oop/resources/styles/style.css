@@ -1,0 +1,20 @@
+.method_signature {
+  font-weight: bold;
+  color: red;
+}
+
+.method_description {
+  font-weight: bold;
+  color: blue;
+}
+
+.method_calling {
+  font-weight: bold;
+  color: blue;
+}
+
+.arg {
+  font-weight: bold;
+  color: green;
+  font-style: italic;
+}
