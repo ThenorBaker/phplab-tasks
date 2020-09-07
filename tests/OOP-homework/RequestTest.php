@@ -35,6 +35,16 @@ class RequestTest extends TestCase
         $this->assertClassHasAttribute('server', Request::class);
     }
 
+    public function testCookieObjectPositive()
+    {
+        $this->assertClassHasAttribute('cookie', Request::class);
+    }
+
+    public function testSessionObjectPositive()
+    {
+        $this->assertClassHasAttribute('session', Request::class);
+    }
+
     // >>>>> 'get' METHOD's TESTS START
     public function testGetPositive()
     {
@@ -56,7 +66,7 @@ class RequestTest extends TestCase
     // >>>>> 'all' METHOD's TESTS START
     public function testAllPositive()
     {
-        $this->assertEquals(['0' => 23.4], $this->fixture->all(['num']));
+        $this->assertEquals(['num' => 23.4], $this->fixture->all(['num']));
     }
 
     public function testAllNegative()
@@ -67,8 +77,10 @@ class RequestTest extends TestCase
 
     public function testAllDefault()
     {
-        //returns an empty array
-        $this->assertEquals([], $this->fixture->all());
+        $this->assertEquals(['Hello' => 'World',
+            'num' => 23.4,
+            'Test' => 'Space'],
+            $this->fixture->all());
     }
     // <<<<< 'all' METHOD's TESTS END
 

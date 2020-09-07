@@ -8,9 +8,9 @@ class CookieTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new Cookie();
-        $this->fixture->placeholder = ['test1' => 'cookie_value',
-                                       'test2' => 'another_cookie_value'];
+        $this->fixture = new Request();
+        $this->fixture->cookie->placeholder = ['test1' => 'cookie_value',
+                                               'test2' => 'another_cookie_value'];
     }
 
     protected function tearDown(): void
@@ -23,55 +23,54 @@ class CookieTest extends TestCase
         $this->assertClassHasAttribute('placeholder', Cookie::class);
     }
 
-
     // >>>>> 'get' METHOD's TESTS START
     public function testGetPositive()
     {
-        $this->assertEquals('cookie_value', $this->fixture->get('test1'));
+        $this->assertEquals('cookie_value', $this->fixture->cookie->get('test1'));
     }
 
     public function testGetNegative()
     {
         $this->expectException(TypeError::class);
-        $this->fixture->get([23.4]);
+        $this->fixture->cookie->get([23.4]);
     }
 
     public function testGetDefault()
     {
-        $this->assertEquals(null, $this->fixture->get('not_exist'));
+        $this->assertEquals(null, $this->fixture->cookie->get('not_exist'));
     }
     // <<<<< 'get' METHOD's TESTS END
 
     // >>>>> 'all' METHOD's TESTS START
     public function testAllPositive()
     {
-        $this->assertEquals([0 => 'cookie_value', 1 => 'another_cookie_value'],
-            $this->fixture->all(['test1', 'test2']));
+        $this->assertEquals(['test1' => 'cookie_value'],
+            $this->fixture->cookie->all(['test1']));
     }
 
     public function testAllNegative()
     {
         $this->expectException(TypeError::class);
-        $this->fixture->all(23.4);
+        $this->fixture->cookie->all(23.4);
     }
 
     public function testAllDefault()
     {
-        //returns an empty array
-        $this->assertEquals([], $this->fixture->all());
+        $this->assertEquals(['test1' => 'cookie_value', 'test2' => 'another_cookie_value'],
+            $this->fixture->cookie->all());
     }
     // <<<<< 'all' METHOD's TESTS END
 
     // >>>>> 'has' METHOD's TESTS START
     public function testHasPositive()
     {
-        $this->assertEquals(true, $this->fixture->has('test1'));
+        $this->assertEquals(true, $this->fixture->cookie->has('test1'));
     }
 
     public function testHasNegative()
     {
         $this->expectException(TypeError::class);
-        $this->fixture->has([23.4]);
+        $this->fixture->cookie->has([23.4]);
     }
     // <<<<< 'has' METHOD's TESTS END
 }
