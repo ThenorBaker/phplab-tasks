@@ -1,5 +1,7 @@
 <?php
 
+namespace src\classes;
+
 class Request
 {
     public $query;
@@ -10,8 +12,6 @@ class Request
 
     public function __construct()
     {
-        include_once 'Cookie.php';
-        include_once 'Session.php';
 
         $this->cookie = new Cookie();
         $this->session = new Session();
@@ -86,13 +86,11 @@ class Request
 
     public function cookies()
     {
-        include_once 'Cookie.php';
-        return new Cookie();
+        return $this->cookie;
     }
 
     public function session()
     {
-        include_once 'Session.php';
-        return new Session();
+        return $this->session;
     }
 }

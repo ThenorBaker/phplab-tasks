@@ -8,7 +8,7 @@ class RequestTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new Request();
+        $this->fixture = new \src\classes\Request();
         $this->fixture->query = ['Hello' => 'World', 'num' => 23.4];
         $this->fixture->request = ['Test' => 'Space'];
         $this->fixture->server['HTTP_CLIENT_IP'] = '216.58.216.164';
@@ -22,27 +22,27 @@ class RequestTest extends TestCase
 
     public function testQueryPropertyPositive()
     {
-        $this->assertClassHasAttribute('query', Request::class);
+        $this->assertClassHasAttribute('query', \src\classes\Request::class);
     }
 
     public function testRequestPropertyPositive()
     {
-        $this->assertClassHasAttribute('request', Request::class);
+        $this->assertClassHasAttribute('request', \src\classes\Request::class);
     }
 
     public function testServerPropertyPositive()
     {
-        $this->assertClassHasAttribute('server', Request::class);
+        $this->assertClassHasAttribute('server', \src\classes\Request::class);
     }
 
     public function testCookieObjectPositive()
     {
-        $this->assertClassHasAttribute('cookie', Request::class);
+        $this->assertClassHasAttribute('cookie', \src\classes\Request::class);
     }
 
     public function testSessionObjectPositive()
     {
-        $this->assertClassHasAttribute('session', Request::class);
+        $this->assertClassHasAttribute('session', \src\classes\Request::class);
     }
 
     public function testGetPositive()

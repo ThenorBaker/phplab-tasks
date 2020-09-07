@@ -1,6 +1,7 @@
 <?php
 
-require_once 'Cookie.php';
+//require_once 'Cookie.php';
+namespace src\classes;
 
 class Session extends Cookie
 {

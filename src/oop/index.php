@@ -1,23 +1,20 @@
 <?php
 
-require_once "classes/Request.php";
-require_once "classes/Cookie.php";
-require_once "classes/Session.php";
-require_once "functions.php";
+namespace src\classes;
+require "../../vendor/autoload.php";
 
 ?>
 <!doctype html>
 <html lang="en">
+
     <?php require 'pages/common/head.html' ?>
+
     <body class="container">
         <?php require 'pages/common/header.html' ?>
 
         <?php
-
         session_start();
-
-        $request = new Request();
-
+//        $request = new Request();
         ?>
 
         <main role="main1">
@@ -29,7 +26,7 @@ require_once "functions.php";
                     <div class="col-md-4" > <!-- REQUEST class methods -->
                         <h2>Request class</h2>
                         <ul>
-                            <?php foreach (get_class_methods('Request') as $method): ?>
+                            <?php foreach (get_class_methods('\src\classes\Request') as $method): ?>
                                 <?php if($method == '__construct') continue;?>
                             <li><a href="pages\request.php?method=<?= $method; ?>"><?= $method; ?></a></li>
                             <?php endforeach; ?>
@@ -40,7 +37,7 @@ require_once "functions.php";
 
                         <h2>Cookie class</h2>
                         <ul>
-                            <?php foreach (get_class_methods('Cookie') as $method): ?>
+                            <?php foreach (get_class_methods('\src\classes\Cookie') as $method): ?>
                                 <?php if($method == '__construct') continue;?>
                                 <li><a href="pages\cookie.php?method=<?= $method; ?>"><?= $method; ?></a></li>
                             <?php endforeach; ?>
@@ -50,7 +47,7 @@ require_once "functions.php";
                     <div class="col-md-4"> <!-- SESSION class methods -->
                         <h2>Session class</h2>
                         <ul>
-                            <?php foreach (get_class_methods('Session') as $method): ?>
+                            <?php foreach (get_class_methods('\src\classes\Session') as $method): ?>
                                 <?php if($method == '__construct') continue;?>
                                 <li><a href="pages\session.php?method=<?= $method; ?>"><?= $method; ?></a></li>
                             <?php endforeach; ?>

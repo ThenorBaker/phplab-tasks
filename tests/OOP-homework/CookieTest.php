@@ -8,7 +8,7 @@ class CookieTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new Request();
+        $this->fixture = new \src\classes\Request();
         $this->fixture->cookie->placeholder = ['test1' => 'cookie_value',
                                                'test2' => 'another_cookie_value'];
     }
@@ -20,7 +20,7 @@ class CookieTest extends TestCase
 
     public function testPlaceholderPropertyPositive()
     {
-        $this->assertClassHasAttribute('placeholder', Cookie::class);
+        $this->assertClassHasAttribute('placeholder', \src\classes\Cookie::class);
     }
 
     public function testGetPositive()

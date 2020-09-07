@@ -1,5 +1,7 @@
 <?php
 
+namespace src\classes;
+
 class Cookie
 {
     public $placeholder; //cookie array

@@ -1,10 +1,12 @@
 <?php
 
-require_once '../functions.php';
-require_once '../classes/Request.php';
+namespace src\classes;
+require "../../../vendor/autoload.php";
 
 session_start();
 $request = new Request();
+
+//below are some value to test functions
 $request->cookie->placeholder = array_merge($request->cookie->placeholder, ['Hello' => 'World!',
                                                                             'Hi' => 'there!',
                                                                             'How' => 'are you?',

@@ -8,7 +8,7 @@ class SessionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixture = new Request();
+        $this->fixture = new src\classes\Request();
         $this->fixture->session->placeholder = ['test1' => 'session_value',
                                                 'test2' => 'another_session_value'];
     }
@@ -20,7 +20,7 @@ class SessionTest extends TestCase
 
     public function testPlaceholderPropertyPositive()
     {
-        $this->assertClassHasAttribute('placeholder', Session::class);
+        $this->assertClassHasAttribute('placeholder', \src\classes\Cookie::class);
     }
 
     public function testGetPositive()

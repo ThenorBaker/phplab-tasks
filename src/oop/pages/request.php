@@ -1,7 +1,7 @@
 <?php
 
-require_once '../functions.php';
-require_once '../classes/Request.php';
+namespace src\classes;
+require "../../../vendor/autoload.php";
 
 session_start();
 $request = new Request();
