@@ -7,8 +7,8 @@
             "src/04-functions.php",
             "src/web/functions.php",
             "src/oop/functions.php",
-            "src/oop/classes/Cookie.php",
             "src/oop/classes/Request.php",
+            "src/oop/classes/Cookie.php",
             "src/oop/classes/Session.php"
         ],
         "psr-4": {
@@ -17,6 +17,7 @@
     },
     "require": {
         "php": "^7.4",
-        "phpunit/phpunit": "^9.2"
+        "phpunit/phpunit": "^9.2",
+        "symfony/http-foundation": "^5.1"
     }
 }
