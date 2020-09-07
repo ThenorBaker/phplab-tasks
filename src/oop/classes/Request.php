@@ -5,9 +5,17 @@ class Request
     public $query;
     public $request;
     public $server;
+    public $session;
+    public $cookie;
 
     public function __construct()
     {
+        include_once 'Cookie.php';
+        include_once 'Session.php';
+
+        $this->cookie = new Cookie();
+        $this->session = new Session();
+
         $this->query = $_GET;
         $this->request = $_POST;
         $this->server = $_SERVER;
@@ -22,31 +30,22 @@ class Request
         } elseif (!empty($this->query($key))) {
             $result = $this->query($key);
         }
-
         return $result;
     }
 
     public function all(array $only = [])
     {
-        $merged = array_merge($this->query, $this->request);
-        $result = [];
+        $result = array_merge($this->query, $this->request);
 
-        if (!empty($only)) {
-            foreach ($only as $filteringKey) {
-                    if (isExists($filteringKey, $merged)) {
-                        array_push($result, $merged[$filteringKey]);
-                    }
-                }
-            }
-
+        if (count($only)) {
+          return array_intersect_key($result, array_flip($only));
+        }
         return $result;
     }
 
     public function has(string $key)
     {
-        $keys = array_merge(array_keys($this->query),  array_keys($this->request));
-
-        return in_array($key, $keys);
+        return array_key_exists($key, $this->all());
     }
 
     public function query(string $key, $default = null)
@@ -60,11 +59,12 @@ class Request
 
     public function post(string $key, $default = null)
     {
+        $result = $default;
+
         if (!empty($this->request[$key])) {
-            return $this->request[$key];
-        } else {
-            return $default;
-        }
+            $result =  $this->request[$key];
+          }
+        return $result;
     }
 
     public function ip()
@@ -76,12 +76,23 @@ class Request
         } else {
             $ip = $this->server['REMOTE_ADDR'];
         }
-
         return $ip;
     }
 
     public function userAgent(): string
     {
         return $this->server['HTTP_USER_AGENT'];
+    }
+
+    public function cookies()
+    {
+        include_once 'Cookie.php';
+        return new Cookie();
+    }
+
+    public function session()
+    {
+        include_once 'Session.php';
+        return new Session();
     }
 }

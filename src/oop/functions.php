@@ -20,15 +20,6 @@ function getSignature($current_method, $method_description)
     }
 }
 
-function isExists($filteringKey, $merged)
-{
-    foreach ($merged as $key => $value) {
-        if($key == $filteringKey){
-            return true;
-        }
-    }
-}
-
 function getArgRequest($method)
 {
     $arg = null;
@@ -44,6 +35,8 @@ function getArgRequest($method)
         case 'post':
             $arg = 'some_arg';
             break;
+        case 'cookies':
+            $arg = '';
         default:
             $arg = null;
         break;

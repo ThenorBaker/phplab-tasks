@@ -4,32 +4,25 @@ require_once 'Cookie.php';
 
 class Session extends Cookie
 {
-	
     public $placeholder; //session array
 
     public function __construct()
     {
-        $this->placeholder = $_SESSION;
+        $this->placeholder = &$_SESSION;
     }
 
     public function set(string $key, $value = 'default')
     {
-        $this->placeholder = array_merge($this->placeholder, [$key => $value]);
-
-        //the next return statement was crated only for the method's working visualization on the web page
-        return "Data with the $value value was created under the $key key.";
+        return $this->placeholder = array_merge($this->placeholder, [$key => $value]);
     }
 
     public function remove($key)
     {
         if (array_key_exists($key, $this->placeholder)) {
             unset($this->placeholder[$key]);
-
-            //the next return statement was crated only for the method's working visualization on the web page
-            return "Session data with the $key key was removed.";
-        } else {
-            return 'No such key.';
+            return true;
         }
+        return false;
     }
 
     public function clear()

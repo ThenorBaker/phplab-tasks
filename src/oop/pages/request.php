@@ -3,6 +3,7 @@
 require_once '../functions.php';
 require_once '../classes/Request.php';
 
+session_start();
 $request = new Request();
 
 ?>
@@ -18,14 +19,16 @@ $request = new Request();
 
         <main class="container ">
 
-            <div clas="ml-5 mt-1"> <!-- method's info -->
-            <?php
-                $current_method = $request->query('method');
-                $current_arg = getArgRequest($current_method);
-                $method_signature = getSignature($current_method, require '../resources/request_methods_info.php');
-                $method_description = getDescription($current_method, require '../resources/request_methods_info.php');
-            ?>
-                <div>
+            <div clas="ml-5 mt-1">
+
+              <?php
+                  $current_method = $request->query('method');
+                  $current_arg = getArgRequest($current_method);
+                  $method_signature = getSignature($current_method, require '../resources/request_methods_info.php');
+                  $method_description = getDescription($current_method, require '../resources/request_methods_info.php');
+              ?>
+
+                <div> <!-- method's info -->
                     <article>
                         <p>
                             Method's signature: <span class="method_signature"> <?= $method_signature ?></span>
@@ -35,17 +38,18 @@ $request = new Request();
                             What does it? <span class="method_description"> <?= $method_description ?></span>
                         </p>
                     </article>
-                </div>
-            </div>                 <!-- /method's info -->
+                </div> <!-- /method's info -->
+
+            </div>
             <hr>
 
             <div> <!-- method's input and output -->
-                <p>Result of calling  
-                    <span class="method_signature"> <?= $method_signature; ?></span> method with the 
+                <p>Result of calling
+                    <span class="method_signature"> <?= $method_signature; ?></span> method with the
                     <span class="arg"> <?= var_dump($current_arg); ?> </span> key:
                     <span class="method_calling ml-5"> <?php var_dump($request->$current_method($current_arg)); ?> </span>.
                 </p>
-            </div><!-- /method's input and output -->
+            </div> <!-- /method's input and output -->
             <hr>
 
         </main>

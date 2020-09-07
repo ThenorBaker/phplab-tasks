@@ -14,12 +14,9 @@ require_once "functions.php";
 
         <?php
 
-
         session_start();
 
         $request = new Request();
-        $cookie = new Cookie();
-        $session = new Session();
 
         ?>
 

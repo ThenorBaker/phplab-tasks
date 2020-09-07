@@ -5,32 +5,28 @@ class Cookie
     public $placeholder; //cookie array
 
     public function __construct()
-    {   
+    {
         $this->placeholder = $_COOKIE;
     }
 
     public function get(string $key, $default = null)
     {
-        if (!empty($this->placeholder[$key])) {
-            return $this->placeholder[$key];
-        } else {
-            return $default;
-        }
+      $result = $default;
+
+      if (!empty($this->placeholder[$key])) {
+          $result = $this->placeholder[$key];
+      }
+      return $result;
     }
 
     public function all(array $only = [])
     {
-        $result = [];
+      $result = $this->placeholder;
 
-        if (!empty($only)) {
-            foreach ($only as $filteringKey) {
-                    if(isExists($filteringKey, $this->placeholder)){
-                        array_push($result, $this->placeholder[$filteringKey]);
-                    }
-                }
-            }
-
-            return $result;
+      if (count($only)) {
+        return array_intersect_key($result, array_flip($only));
+      }
+      return $result;
     }
 
     public function has(string $key)
@@ -43,7 +39,7 @@ class Cookie
            return setcookie($key, $value);
     }
 
-    public function remove($key)
+    public function remove(string $key)
     {
         if(array_key_exists($key, $this->placeholder)){
             return setcookie($key, '', time() - 3600);

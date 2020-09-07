@@ -2,17 +2,14 @@
 
 require_once '../functions.php';
 require_once '../classes/Request.php';
-require_once '../classes/Cookie.php';
 
+session_start();
 $request = new Request();
-$cookie = new Cookie();
-
-$cookie->placeholder = array_merge($cookie->placeholder, ['Hello' => 'World!',
-															'Hi' => 'there!',
-															'How' => 'are you?',
-															'Are you' => 'coding?']);
+$request->cookie->placeholder = array_merge($request->cookie->placeholder, ['Hello' => 'World!',
+                                                                            'Hi' => 'there!',
+                                                                            'How' => 'are you?',
+                                                                            'Are you' => 'coding?']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -24,14 +21,16 @@ $cookie->placeholder = array_merge($cookie->placeholder, ['Hello' => 'World!',
 
         <main class="container ">
 
-            <div clas="ml-5 mt-1"> <!-- method's info -->
-            <?php
-                $current_method = $request->query('method');
-                $current_arg = getArgCookie($current_method);
-                $method_signature = getSignature($current_method, require '../resources/cookie_methods_info.php');
-                $method_description = getDescription($current_method, require '../resources/cookie_methods_info.php');
-        	?>
-                <div>
+            <div clas="ml-5 mt-1">
+
+              <?php
+                  $current_method = $request->query('method');
+                  $current_arg = getArgCookie($current_method);
+                  $method_signature = getSignature($current_method, require '../resources/cookie_methods_info.php');
+                  $method_description = getDescription($current_method, require '../resources/cookie_methods_info.php');
+      	       ?>
+
+                <div> <!-- method's info -->
                     <article>
                         <p>
                             Method's signature: <span class="method_signature"> <?= $method_signature ?></span>
@@ -41,17 +40,18 @@ $cookie->placeholder = array_merge($cookie->placeholder, ['Hello' => 'World!',
                             What does it? <span class="method_description"> <?= $method_description ?></span>
                         </p>
                     </article>
-                </div>
-            </div>                 <!-- /method's info -->
+                </div> <!-- /method's info -->
+
+            </div>
             <hr>
 
             <div> <!-- method's input and output -->
-                <p>Result of calling  
-                    <span class="method_signature"> <?= $method_signature; ?></span> method with the 
+                <p>Result of calling
+                    <span class="method_signature"> <?= $method_signature; ?></span> method with the
                     <span class="arg"> <?= var_dump($current_arg); ?> </span> key:
-                    <span class="method_calling ml-5"> <?php var_dump($cookie->$current_method($current_arg)); ?> </span>.
+                    <span class="method_calling ml-5"> <?php var_dump($request->cookie->$current_method($current_arg)); ?> </span>.
                 </p>
-            </div><!-- /method's input and output -->
+            </div> <!-- /method's input and output -->
             <hr>
 
         </main>
