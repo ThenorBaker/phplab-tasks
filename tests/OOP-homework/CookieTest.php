@@ -23,7 +23,6 @@ class CookieTest extends TestCase
         $this->assertClassHasAttribute('placeholder', Cookie::class);
     }
 
-    // >>>>> 'get' METHOD's TESTS START
     public function testGetPositive()
     {
         $this->assertEquals('cookie_value', $this->fixture->cookie->get('test1'));
@@ -39,9 +38,7 @@ class CookieTest extends TestCase
     {
         $this->assertEquals(null, $this->fixture->cookie->get('not_exist'));
     }
-    // <<<<< 'get' METHOD's TESTS END
 
-    // >>>>> 'all' METHOD's TESTS START
     public function testAllPositive()
     {
         $this->assertEquals(['test1' => 'cookie_value'],
@@ -59,9 +56,7 @@ class CookieTest extends TestCase
         $this->assertEquals(['test1' => 'cookie_value', 'test2' => 'another_cookie_value'],
             $this->fixture->cookie->all());
     }
-    // <<<<< 'all' METHOD's TESTS END
 
-    // >>>>> 'has' METHOD's TESTS START
     public function testHasPositive()
     {
         $this->assertEquals(true, $this->fixture->cookie->has('test1'));
@@ -72,5 +67,4 @@ class CookieTest extends TestCase
         $this->expectException(TypeError::class);
         $this->fixture->cookie->has([23.4]);
     }
-    // <<<<< 'has' METHOD's TESTS END
 }
