@@ -27,6 +27,7 @@ class SessionTest extends TestCase
 
     /**
      * @dataProvider providerGetPositive
+     *
      * @param mixed $expected
      * @param string $input
      */
@@ -48,6 +49,7 @@ class SessionTest extends TestCase
 
     /**
      * @dataProvider providerAllPositive
+     *
      * @param array $expected
      * @param array $input
      */
@@ -73,6 +75,7 @@ class SessionTest extends TestCase
 
     /**
      * @dataProvider providerHasPositive
+     *
      * @param boolean $expected
      * @param string $input
      */
@@ -89,6 +92,7 @@ class SessionTest extends TestCase
 
     /**
      * @dataProvider providerSetPositive
+     *
      * @param array $expected
      * @param string $key
      * @param mixed $value
@@ -106,6 +110,7 @@ class SessionTest extends TestCase
 
     /**
      * @dataProvider providerRemovePositive
+     *
      * @param boolean $expected
      * @param string $input
      */

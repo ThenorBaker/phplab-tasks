@@ -27,6 +27,7 @@ class CookieTest extends TestCase
 
     /**
      * @dataProvider providerGetPositive
+     *
      * @param mixed $expected
      * @param string $input
      */
@@ -48,6 +49,7 @@ class CookieTest extends TestCase
 
     /**
      * @dataProvider providerAllPositive
+     *
      * @param array $expected
      * @param array $input
      */
@@ -64,6 +66,7 @@ class CookieTest extends TestCase
 
     /**
      * @dataProvider providerAllDefault
+     *
      * @param array $expected
      */
     public function testAllDefault($expected)
@@ -73,6 +76,7 @@ class CookieTest extends TestCase
 
     /**
      * @dataProvider providerHasPositive
+     *
      * @param boolean $expected
      * @param string $input
      */

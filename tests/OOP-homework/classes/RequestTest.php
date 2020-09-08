@@ -33,6 +33,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerGetPositive
+     *
      * @param mixed $expected
      * @param string $input
      */
@@ -54,6 +55,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerAllPositive
+     *
      * @param array $expected
      * @param array $input
      */
@@ -70,6 +72,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerAllDefault
+     *
      * @param $expected
      */
     public function testAllDefault($expected)
@@ -79,6 +82,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerHasPositive
+     *
      * @param boolean $expected
      * @param string $input
      */
@@ -95,6 +99,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerQueryPositive
+     *
      * @param mixed $expected
      * @param string $input
      */
@@ -116,6 +121,7 @@ class RequestTest extends TestCase
 
     /**
      * @dataProvider providerPostPositive
+     *
      * @param mixed $expected
      * @param string $input
      */
