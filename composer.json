@@ -17,7 +17,6 @@
     },
     "require": {
         "php": "^7.4",
-        "phpunit/phpunit": "^9.2",
-        "symfony/http-foundation": "^5.1"
+        "phpunit/phpunit": "^9.2"
     }
 }
