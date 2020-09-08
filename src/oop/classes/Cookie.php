@@ -13,22 +13,21 @@ class Cookie
 
     public function get(string $key, $default = null)
     {
-      $result = $default;
+        $result = $default;
 
-      if (!empty($this->placeholder[$key])) {
+        if (!empty($this->placeholder[$key])) {
           $result = $this->placeholder[$key];
-      }
-      return $result;
+        }
+        return $result;
     }
 
     public function all(array $only = [])
     {
-      $result = $this->placeholder;
-
-      if (count($only)) {
-        return array_intersect_key($result, array_flip($only));
-      }
-      return $result;
+        $result = $this->placeholder;
+        if (count($only)) {
+            return array_intersect_key($result, array_flip($only));
+          }
+        return $result;
     }
 
     public function has(string $key)
@@ -38,7 +37,7 @@ class Cookie
 
     public function set(string $key, $value = 'default')
     {
-           return setcookie($key, $value);
+        return setcookie($key, $value);
     }
 
     public function remove(string $key)
@@ -46,7 +45,7 @@ class Cookie
         if(array_key_exists($key, $this->placeholder)){
             return setcookie($key, '', time() - 3600);
         } else {
-            return 'No such key.';
+            return false;
         }
     }
 }
