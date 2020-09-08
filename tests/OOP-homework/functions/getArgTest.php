@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class getArgRequestTest extends TestCase
+class getArgTest extends TestCase
 {
     /**
      * @dataProvider providerArgRequest
